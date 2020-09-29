@@ -41,6 +41,7 @@ export default {
 }
 body{
   background-color: #313c46;
+
 }
 .error{
   background-color: #822314;
@@ -48,7 +49,9 @@ body{
   border-radius: 1em;
 }
 .main{
+  display: flex;
   justify-content: center;
+
 }
 
 </style>
