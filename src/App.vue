@@ -1,34 +1,10 @@
 <template>
-  <Login class="main" v-if="state" />
-  <div>
-    <p class="error" v-if="error">Something went wrong 😐 <br>{{error}}</p>
+  <div id="nav">
+    <router-link to="/">Home</router-link> |
+    <router-link to="/about">About</router-link>
   </div>
+  <router-view/>
 </template>
-
-<script>
-import Login from './components/Login.vue';
-import REST_interface from './REST_interface';
-export default {
-  name: 'App',
-  components: {
-    Login: Login
-  },
-  data() {
-    return {
-      state: false,
-      error: '',
-    }
-  },
-  async created() {
-    try {
-      this.state = await REST_interface.isBackendRunning();
-    } catch (e) {
-      this.error = e.message;
-    }
-  },
-}
-
-</script>
 
 <style>
 #app {
@@ -36,22 +12,23 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
+  color: #2c3e50;
+}
+
+#nav {
+  padding: 30px;
+}
+
+#nav a {
+  font-weight: bold;
+  font-size: 40px;
   color: #ffffff;
-  margin-top: 60px;
+}
+#nav a.router-link-exact-active {
+  color: #d12662;
 }
 body{
   background-color: #313c46;
-
-}
-.error{
-  background-color: #822314;
-  padding: 2em;
-  border-radius: 1em;
-}
-.main{
-  display: flex;
-  justify-content: center;
-
 }
 
 </style>

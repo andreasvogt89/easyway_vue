@@ -7,28 +7,49 @@
       </svg>
     </div>
     <h1 id="title">Login</h1>
-  <form >
+  <form class="form" >
     <label>
-      <input type="text" name="username" placeholder="Username..">
+      <input type="text" name="username"  v-model="input.username" placeholder="Username..">
     </label>
   </form>
-  <form class="form">
+  <form class="form" >
     <label>
-      <input type="text" name="password" placeholder="Password..">
+      <input type="password"  v-model="input.password" name="password" placeholder="Password..">
     </label>
   </form>
+    <button class="button" v-on:click="login()" > GO!
+    </button>
   </div>
   </div>
 </template>
 
 <script>
 import { reactive } from 'vue';
+import REST_interface from "@/REST_interface";
 
 export default {
   setup() {
-    const state = reactive({
-      counter: 0 });
-    return { state };
+    const input = reactive({
+      username: "",
+      password: ""
+    });
+    return { input };
+  },
+  methods: {
+    async login() {
+
+        let transmit = {
+          username: this.input.username,
+          password: this.input.password,
+          role:"Admin"
+        }
+        await REST_interface.login(transmit, ).then(resp=>{
+            console.log(resp);
+            this.$router.push({ name: 'login', query: { redirect: '/path' } });
+        }).catch(err=>{
+          console.log(err);
+        });
+    }
   }
 };
 </script>
@@ -38,9 +59,21 @@ export default {
   margin: 2em;
 }
 
+.button{
+  background-color: #e5e5e5;
+  border: 2px solid #D12662;
+  border-radius: 0.1em;
+  font-size: 40px;
+  padding: 1px 20px 1px 20px;
+  transition-duration: 0.4s;
+}
+.button:hover {
+  background-color: #d12662;
+}
 #title {
   font-size: 40px;
   font-family: Verdana,sans-serif;
+  color: white;
 }
 
 .background {
@@ -63,6 +96,14 @@ export default {
   animation:rot 25s 0ms linear infinite;
 }
 input[type=text] {
+  box-sizing: border-box;
+  border: 2px solid #D12662;
+  border-radius: 4px;
+  font-size: 22px;
+  background-color: #ffffff;
+  padding: 12px 20px 12px 40px;
+}
+input[type=password] {
   box-sizing: border-box;
   border: 2px solid #D12662;
   border-radius: 4px;
