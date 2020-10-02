@@ -17,7 +17,7 @@
       <input type="password"  v-model="input.password" name="password" placeholder="Password..">
     </label>
   </form>
-    <button class="button" v-on:click="login()" > GO!
+    <button class="button" v-on:click="executeLogin()" > GO!
     </button>
   </div>
   </div>
@@ -36,21 +36,20 @@ export default {
     return { input };
   },
   methods: {
-    async login() {
-
+    async executeLogin() {
         let transmit = {
           username: this.input.username,
           password: this.input.password,
           role:"Admin"
         }
-        await REST_interface.login(transmit, ).then(resp=>{
-            console.log(resp);
-            this.$router.push({ name: 'login', query: { redirect: '/path' } });
+        await REST_interface.login(transmit).then(resp=>{
+            sessionStorage.easyway.accessToken = resp.accesstoken;
         }).catch(err=>{
+          sessionStorage.easyway.accesstoken = false;
           console.log(err);
         });
     }
-  }
+  },
 };
 </script>
 
