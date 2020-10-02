@@ -43,10 +43,11 @@ export default {
           role:"Admin"
         }
         await REST_interface.login(transmit).then(resp=>{
-            sessionStorage.easyway.accessToken = resp.accesstoken;
+            sessionStorage.EAtoken = resp.accessToken;
+          this.$router.push({ name: 'Home', query: { redirect: '/' } });
         }).catch(err=>{
-          sessionStorage.easyway.accesstoken = false;
-          console.log(err);
+          sessionStorage.removeItem('EAtoken');
+          console.log(err.message);
         });
     }
   },
@@ -54,6 +55,11 @@ export default {
 </script>
 
 <style scoped>
+
+.component{
+  display: flex;
+  justify-content: center;
+}
 .form{
   margin: 2em;
 }

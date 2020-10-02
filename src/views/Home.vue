@@ -1,39 +1,37 @@
 <template>
   <div class="home">
-    <Login class="main"/>
     <div>
       <p class="error" v-if="!this.state.isBackendAvailable" >The service is currently not running, call your administrator 📣</p>
     </div>
     <div>
-      <p class="error" v-if="error" >Something went wrong 😐 <br>{{error}}</p>
+      <p class="error" v-if="this.state.error" >Something went wrong 😐 <br>{{error}}</p>
     </div>
+    <Events />
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import Login from "@/components/Login";
 import REST_interface from "@/REST_interface";
+import Events from "@/components/Events";
 import {reactive} from "vue";
 export default {
   name: 'Home',
   components: {
-    Login
+    Events
   },
   setup() {
     const state = reactive({
-      isBackendAvailable: false,
-      error: '',
+      isBackendAvailable: true,
+      error: false,
     });
     return { state };
   },
   async created() {
     try {
       this.state.isBackendAvailable = await REST_interface.isBackendRunning();
-      if(!sessionStorage.easyway){
-        sessionStorage.easyway = {
-          accessToken: false
-        }
+      if(sessionStorage.getItem('EAtoken') === null){
+       await this.$router.push({name: 'Login', query: {redirect: '/login'}});
       }
     } catch (e) {
       this.error = e.message;
@@ -43,10 +41,6 @@ export default {
 }
 </script>
 <style scoped>
-.main{
-  display: flex;
-  justify-content: center;
-}
 .error{
   background-color: #fa6764;
   padding: 2em;
