@@ -1,8 +1,8 @@
 <template>
 <div>
-  <ul id="example-1">
-    <li v-for="event in this.events" :key="event.name">
-      {{ event.message }}
+  <ul class="eventList">
+    <li v-for="event in state.events" :key="event._id">
+      {{ event.event.name }}
     </li>
   </ul>
 </div>
@@ -23,10 +23,10 @@ export default {
   },
   async created() {
       await REST_interface.getCollection("events").then(resp=>{
-        this.events = resp.body;
+        this.state.events = resp
       }).catch(err=>{
         sessionStorage.removeItem('EAtoken');
-        console.log(err);
+        console.log("By Token 👋 :" + err.message);
         this.$router.push({ name: 'Login', query: { redirect: '/login' } });
       });
     }
@@ -34,5 +34,8 @@ export default {
 </script>
 
 <style scoped>
-
+.eventList{
+  color: white;
+  padding: 2vw;
+}
 </style>
