@@ -15,7 +15,7 @@
     </div>
     <div class="pad">
     <label>
-      <input type="password"  v-model="input.password" name="password" placeholder="Password..">
+      <input type="password" autocomplete=on  v-model="input.password" name="password" placeholder="Password..">
     </label>
     </div>
   </form>
