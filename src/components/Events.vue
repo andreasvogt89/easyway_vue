@@ -1,6 +1,6 @@
 <template>
 <div>
-    <button class="eventButton" v-for="event in state.events" :key="event._id">
+    <button v-on:click="setEvent(event)" class="eventButton" v-for="event in state.events" :key="event._id">
       <span>{{event.event.name}}<br></span>
       <span>{{event.event.eventDate}}<br></span>
       <span>{{event.event.participant.length}}👨‍👦‍👦</span>
@@ -22,6 +22,7 @@ export default {
     return { state };
   },
   async created() {
+      sessionStorage.removeItem('displayEvent');
       await REST_interface.getCollection("events").then(resp=>{
         this.state.events = this.parseDate(resp);
       }).catch(err=>{
@@ -37,6 +38,10 @@ export default {
         event.event.eventDate = "📆 " + newDate.getDay() + '.' + newDate.getMonth() + '.' + newDate.getFullYear() + "\n"
       })
       return events;
+    },
+    setEvent(event){
+      sessionStorage.setItem("displayEvent", event);
+      this.$router.push({ name: 'EventDetails', query: { redirect: '/eventDetails' } });
     }
   }
 }
