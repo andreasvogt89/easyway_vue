@@ -22,7 +22,7 @@ const routes = [
     component: () => import('../components/Login')
   },
   {
-    path: '/EventDetails',
+    path: '/event',
     name: 'EventDetails',
     component: () => import('../components/Event')
   }

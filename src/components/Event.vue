@@ -1,6 +1,10 @@
 <template>
   <div class="component">
-<h1>{{ this.state.event.name }}</h1>
+    <button v-on:click="this.back" class="button"> X </button>
+    <div>
+    <h1>🕵️‍♀️</h1>
+    <p></p>
+    </div>
   </div>
 </template>
 
@@ -23,10 +27,16 @@ export default {
     await REST_interface.getCollection("persons").then(resp=>{
       this.state.participants = resp.filter(person => person.event === this.state.event._id);
     }).catch(err=>{
+      console.log('Event load failed: ' + err);
       sessionStorage.removeItem('displayEvent');
-      console.log("By Token 👋 :" + err.message);
-      this.$router.push({ name: 'Events', query: { redirect: '/events' } });
+      this.$router.push({ name: 'Home', query: { redirect: '/' } });
     });
+  },
+  methods:{
+    back(){
+      sessionStorage.removeItem('displayEvent');
+      this.$router.push({ name: 'Home', query: { redirect: '/' } });
+    }
   }
 }
 </script>
@@ -34,5 +44,16 @@ export default {
 <style scoped>
 .component{
   color: white;
+}
+.button{
+  background-color: transparent;
+  padding: 10px 40px 10px 40px;
+  border-radius: 2em;
+  border-color: #1e2b36;
+  font-size: xx-large;
+}
+
+.button:hover{
+  background-color: #d12662;
 }
 </style>

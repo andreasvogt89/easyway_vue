@@ -1,6 +1,6 @@
 <template>
 <div>
-    <button v-on:click="setEvent(event)" class="eventButton" v-for="event in state.events" :key="event._id">
+    <button @click="this.setEvent(event)" class="eventButton" v-for="event in state.events" :key="event._id">
       <span>{{event.event.name}}<br></span>
       <span>{{event.event.eventDate}}<br></span>
       <span>{{event.event.participant.length}}👨‍👦‍👦</span>
@@ -40,8 +40,8 @@ export default {
       return events;
     },
     setEvent(event){
-      sessionStorage.setItem("displayEvent", event);
-      this.$router.push({ name: 'EventDetails', query: { redirect: '/eventDetails' } });
+      sessionStorage.setItem("displayEvent",event);
+      this.$router.push({ name: 'EventDetails', query: { redirect: '/event' } })
     }
   }
 }
@@ -52,9 +52,10 @@ export default {
   padding: 20px;
   margin: 10px;
   background-color: #1e2b36;
-  border-radius: 0.1em;
+  border-radius: 0.2em;
   font-size: 30px;
   transition-duration: 0.4s;
+  border-color: transparent;
 }
 .eventButton:hover{
   background-color: #d12662;
