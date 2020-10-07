@@ -25,6 +25,11 @@ const routes = [
     path: '/event',
     name: 'EventDetails',
     component: () => import('../components/Event')
+  },
+  {
+    path: '/events/new',
+    name: 'NewEvent',
+    component: () => import('../components/NewEvent')
   }
 ]
 

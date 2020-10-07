@@ -5,6 +5,13 @@
       <span>{{event.event.eventDate}}<br></span>
       <span>{{event.event.participant.length}}👨‍👦‍👦</span>
     </button>
+    <div>
+    <button @click="newEvent" class="eventButton">
+      Event Erstellen<br>
+      👩‍💻<br>
+      ...
+    </button>
+    </div>
 </div>
 </template>
 
@@ -42,6 +49,9 @@ export default {
     setEvent(event){
       sessionStorage.setItem("displayEvent",event);
       this.$router.push({ name: 'EventDetails', query: { redirect: '/event' } })
+    },
+    newEvent(){
+      this.$router.push({ name: 'NewEvent', query: { redirect: '/events/new' } })
     }
   }
 }
@@ -51,6 +61,8 @@ export default {
 .eventButton{
   padding: 20px;
   margin: 10px;
+  height: 6em;
+  width: 8em;
   background-color: #1e2b36;
   border-radius: 0.2em;
   font-size: 30px;
