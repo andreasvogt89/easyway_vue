@@ -1,5 +1,5 @@
 <template>
-<form>
+<form @keyup.enter="addEvent">
   <div  class="input">
   <label>
     <input type="text" name="username" v-model="input.event.name" placeholder="Name..">
@@ -7,7 +7,7 @@
   </div>
   <div class="input">
   <label>
-    <input  type="date" name="date" v-model="input.event.date" placeholder="Datum..">
+    <input  type="date" name="date" v-model="input.event.eventDate" placeholder="Datum..">
   </label>
   </div>
     <div  class="input">
@@ -16,10 +16,10 @@
       </label>
     </div>
   <div>
-    <button>
+    <button class="button" @click="cancel">
       Abbrechen
     </button>
-    <button>
+    <button  type="button" class="button" @click="addEvent">
       Senden
     </button>
   </div>
@@ -28,16 +28,36 @@
 
 <script>
 import {reactive} from "vue";
+import REST_interface from "@/REST_interface";
 
 export default {
   name: "NewEvent",
   setup() {
     const input = reactive({
-      event: {},
-      error: false,
+      event: {
+        name: "",
+        eventDate: "",
+        place:"",
+        participants: [],
+      },
     });
     return { input };
   },
+  methods:{
+    async addEvent(){
+      await REST_interface.postToCollection("events",{event: this.input.event,
+        created_at: new Date()}).then(resp=>{
+          alert("Gspicheret Masafaga!" + resp);
+          this.$router.push({ name: 'Home', query: { redirect: '/' } });
+      }).catch(err=>{
+        alert("Fail Masafaga!: " + err);
+      });
+    },
+    async cancel(){
+     await this.$router.push({ name: 'Home', query: { redirect: '/' } });
+    }
+  },
+
 }
 
 </script>

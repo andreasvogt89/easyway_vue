@@ -3,7 +3,7 @@
     <button @click="this.setEvent(event)" class="eventButton" v-for="event in state.events" :key="event._id">
       <span>{{event.event.name}}<br></span>
       <span>{{event.event.eventDate}}<br></span>
-      <span>{{event.event.participant.length}}👨‍👦‍👦</span>
+      <span>{{event.event.participants.length}}👨‍👦‍👦</span>
     </button>
     <div>
     <button @click="newEvent" class="eventButton">

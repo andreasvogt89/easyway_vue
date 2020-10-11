@@ -41,6 +41,22 @@ class REST_interface {
                 }
             )))
     }
-
+    static postToCollection(collectionName, item){
+        return new Promise(((resolve, reject) =>
+            axios.post(host + '/easyway/add',item,{
+                headers: {
+                    'Collection': collectionName,
+                    'Authorization': "Bearer " +
+                        sessionStorage.getItem('EAtoken'),
+                },
+            }).then((res) => {
+                resolve(
+                    res.data
+                );
+            }).catch((err) => {
+                    reject(err);
+                }
+            )))
+    }
 }
 export default REST_interface
