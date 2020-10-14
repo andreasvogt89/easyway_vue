@@ -1,9 +1,9 @@
 <template>
   <div class="component">
-    <button v-on:click="this.back" class="button"> X </button>
+    <button v-on:click="this.$router.push('/')" class="button"> X </button>
     <div>
-    <h1>🕵️‍♀️</h1>
-    <p></p>
+    <h1>{{state.event.name}}</h1>
+    <p>{{state.event.eventDate}}</p>
     </div>
   </div>
 </template>
@@ -16,28 +16,22 @@ export default {
   name: "Event",
   setup() {
     const state = reactive({
-      event: {},
       participants: [],
+      event: {},
       error: false,
     });
     return { state };
   },
   async created() {
-    this.state.event = sessionStorage.getItem('displayEvent');
     await REST_interface.getCollection("persons").then(resp=>{
+      console.log(this.$route.params);
+      this.state.event = this.$route.params;
       this.state.participants = resp.filter(person => person.event === this.state.event._id);
     }).catch(err=>{
       console.log('Event load failed: ' + err);
-      sessionStorage.removeItem('displayEvent');
-      this.$router.push({ name: 'Home', query: { redirect: '/' } });
+      this.$router.push('/');
     });
   },
-  methods:{
-    back(){
-      sessionStorage.removeItem('displayEvent');
-      this.$router.push({ name: 'Home', query: { redirect: '/' } });
-    }
-  }
 }
 </script>
 

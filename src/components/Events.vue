@@ -1,59 +1,56 @@
 <template>
 <div>
   <div>
-    <button @click="this.setEvent(event)" class="eventButton" v-for="event in state.events" :key="event._id">
+    <button @click="this.goToEventDetails(event)" class="eventButton" v-for="event in state.events" :key="event._id">
       <span>{{event.event.name}}<br></span>
       <span>{{event.event.eventDate}}<br></span>
       <span>{{event.event.participants.length}}👨‍👦‍👦</span>
     </button>
   </div>
-    <div>
-    <button @click="newEvent" class="eventButton">
-      Event Erstellen<br>
-      👩‍💻<br>
-      ...
-    </button>
-    </div>
+  <div>
+  <button @click="this.$router.push('/events/new')" class="eventButton">
+    Event Erstellen<br>
+    👩‍💻<br>
+    ...
+  </button>
+  </div>
 </div>
 </template>
 
 <script>
 import {reactive} from "vue";
 import REST_interface from "@/REST_interface";
+import moment from 'moment'
 
 export default {
   name: "Events",
   setup() {
     const state = reactive({
       events: [],
-      error: false,
     });
     return { state };
   },
   async created() {
-      sessionStorage.removeItem('displayEvent');
       await REST_interface.getCollection("events").then(resp=>{
         this.state.events = this.parseDate(resp);
       }).catch(err=>{
         sessionStorage.removeItem('EAtoken');
         console.log("By Token 👋 :" + err.message);
-        this.$router.push({ name: 'Login', query: { redirect: '/login' } });
+        this.$router.push('/login');
       });
     },
   methods:{
     parseDate(events){
       events.forEach(event=>{
+        console.log(event.event.eventDate);
         let newDate = new Date(event.event.eventDate);
-        event.event.eventDate = "📆 " + newDate.getDay() + '.' + newDate.getMonth() + '.' + newDate.getFullYear() + "\n"
-      })
+        event.event.eventDate = "📆 " + new moment(newDate).format('L') + "\n";
+      });
       return events;
     },
-    setEvent(event){
-      sessionStorage.setItem("displayEvent",event);
-      this.$router.push({ name: 'EventDetails', query: { redirect: '/event' } })
-    },
-    newEvent(){
-      this.$router.push({ name: 'NewEvent', query: { redirect: '/events/new' } })
+   goToEventDetails(event){
+      let displayEvent = event.event;
+     this.$router.push({name:'EventDetails', params: displayEvent});
     }
   }
 }

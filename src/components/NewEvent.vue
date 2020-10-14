@@ -15,12 +15,12 @@
         <input type="text" name="place" v-model="input.event.place" placeholder="Wo..">
       </label>
     </div>
-  <div>
-    <button class="button" @click="cancel">
+  <div class="input">
+    <button class="button" @click="this.$router.push('/')">
       Abbrechen
     </button>
     <button  type="button" class="button" @click="addEvent">
-      Senden
+      Erstellen
     </button>
   </div>
 </form>
@@ -45,17 +45,15 @@ export default {
   },
   methods:{
     async addEvent(){
+      console.log(this.input.event.eventDate);
       await REST_interface.postToCollection("events",{event: this.input.event,
         created_at: new Date()}).then(resp=>{
-          alert("Gspicheret Masafaga!" + resp);
-          this.$router.push({ name: 'Home', query: { redirect: '/' } });
+          console.log('Event adding status: ' + resp);
+          this.$router.push('/');
       }).catch(err=>{
-        alert("Fail Masafaga!: " + err);
+        alert("Failed to add event: " + err);
       });
     },
-    async cancel(){
-     await this.$router.push({ name: 'Home', query: { redirect: '/' } });
-    }
   },
 
 }
@@ -83,5 +81,18 @@ input[type=date] {
   font-size: 22px;
   background-color: #ffffff;
   padding: 12px 20px 12px 40px;
+}
+.button{
+  background-color: transparent;
+  height: 2em;
+  width: 8em;
+  margin: 10px;
+  border-radius: 2em;
+  border-color: #1e2b36;
+  font-size: xx-large;
+}
+
+.button:hover{
+  background-color: #d12662;
 }
 </style>

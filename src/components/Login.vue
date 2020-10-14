@@ -54,7 +54,7 @@ export default {
         }
         await REST_interface.login(transmit).then(resp=>{
             sessionStorage.EAtoken = resp.accessToken;
-         this.$router.push({ name: 'Home', query: { redirect: '/' } });
+         this.$router.push('/');
         }).catch(err=>{
           console.log(err);
           sessionStorage.removeItem('EAtoken');
