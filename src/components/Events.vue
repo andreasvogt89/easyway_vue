@@ -1,10 +1,10 @@
 <template>
 <div>
   <div>
-    <button @click="this.goToEventDetails(event)" class="eventButton" v-for="event in state.events" :key="event._id">
-      <span>{{event.event.name}}<br></span>
-      <span>{{event.event.eventDate}}<br></span>
-      <span>{{event.event.participants.length}}👨‍👦‍👦</span>
+    <button @click="this.goToEventDetails(item)" class="eventButton" v-for="item in state.events" :key="item._id">
+      <span>{{item.event.name}}<br></span>
+      <span>{{item.event.eventDate}}<br></span>
+      <span>{{item.event.participants.length}}👨‍👦‍👦</span>
     </button>
   </div>
   <div>
@@ -42,15 +42,13 @@ export default {
   methods:{
     parseDate(events){
       events.forEach(event=>{
-        console.log(event.event.eventDate);
         let newDate = new Date(event.event.eventDate);
         event.event.eventDate = "📆 " + new moment(newDate).format('L') + "\n";
       });
       return events;
     },
-   goToEventDetails(event){
-      let displayEvent = event.event;
-     this.$router.push({name:'EventDetails', params: displayEvent});
+   goToEventDetails(item){
+     this.$router.push({name:'EventDetails', params: {_id: item._id }});
     }
   }
 }

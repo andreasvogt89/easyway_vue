@@ -1,9 +1,12 @@
 <template>
   <div class="component">
     <button v-on:click="this.$router.push('/')" class="button"> X </button>
-    <div>
-    <h1>{{state.event.name}}</h1>
-    <p>{{state.event.eventDate}}</p>
+    <div class="component">
+      <div>
+        <button v-on:click="this.deleteEvent" class="button" > Löschen </button>
+      </div>
+    <h1>{{state.item.event.name}}</h1>
+    <p>{{state.item}}</p>
     </div>
   </div>
 </template>
@@ -17,21 +20,37 @@ export default {
   setup() {
     const state = reactive({
       participants: [],
-      event: {},
+      item: "",
       error: false,
     });
     return { state };
   },
   async created() {
+    await REST_interface.getCollection("events").then(resp=>{
+      this.state.item = resp.filter(item => item._id === this.$route.params._id);
+        console.log(this.state.item);
+    }).catch(err=>{
+      console.log('Event load failed: ' + err);
+      this.$router.push('/');
+    });
     await REST_interface.getCollection("persons").then(resp=>{
-      console.log(this.$route.params);
-      this.state.event = this.$route.params;
       this.state.participants = resp.filter(person => person.event === this.state.event._id);
     }).catch(err=>{
       console.log('Event load failed: ' + err);
       this.$router.push('/');
     });
   },
+  methods:{
+    async deleteEvent() {
+      await REST_interface.deleteItemInCollection("events",this.$route.params._id).then(()=>{
+        this.$router.push('/');
+      }).catch(err=>{
+        alert('Event deleting failed: ' + err)
+        console.log('Event delete failed: ' + err);
+        this.$router.push('/');
+      });
+    }
+  }
 }
 </script>
 

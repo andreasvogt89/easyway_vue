@@ -58,5 +58,22 @@ class REST_interface {
                 }
             )))
     }
+    static deleteItemInCollection(collectionName, itemId){
+        return new Promise(((resolve, reject) =>
+            axios.delete(host + '/easyway/delete/'+ itemId,{
+                headers: {
+                    'Collection': collectionName,
+                    'Authorization': "Bearer " +
+                        sessionStorage.getItem('EAtoken'),
+                },
+            }).then((res) => {
+                resolve(
+                    res.data
+                );
+            }).catch((err) => {
+                    reject(err);
+                }
+            )))
+    }
 }
 export default REST_interface
