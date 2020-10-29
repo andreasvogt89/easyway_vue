@@ -2,11 +2,13 @@
   <div class="component">
     <button v-on:click="this.$router.push('/')" class="button"> X </button>
     <div class="component">
+    <h1>{{state.event.name}}</h1>
+    <p>{{state.event.eventDate}}</p>
+    <p>Anzahl Personen: {{state.event.participants.length}}</p>
+      <br>
       <div>
         <button v-on:click="this.deleteEvent" class="button" > Löschen </button>
       </div>
-    <h1>{{state.item.event.name}}</h1>
-    <p>{{state.item}}</p>
     </div>
   </div>
 </template>
@@ -14,21 +16,29 @@
 <script>
 import {reactive} from "vue";
 import REST_interface from "@/REST_interface";
+import moment from "moment";
 
 export default {
   name: "Event",
   setup() {
     const state = reactive({
       participants: [],
-      item: "",
+      event: {
+        eventDate: "",
+        name: "",
+        participants: [],
+        place: ""
+      },
       error: false,
     });
     return { state };
   },
   async created() {
     await REST_interface.getCollection("events").then(resp=>{
-      this.state.item = resp.filter(item => item._id === this.$route.params._id);
-        console.log(this.state.item);
+      let eventDb = resp.filter(item => item._id === this.$route.params._id);
+      let newDate = new Date(eventDb[0].event.eventDate);
+      eventDb[0].event.eventDate = "📆 " + new moment(newDate).format('L') + "\n";
+      this.state.event = eventDb[0].event;
     }).catch(err=>{
       console.log('Event load failed: ' + err);
       this.$router.push('/');
@@ -57,6 +67,7 @@ export default {
 <style scoped>
 .component{
   color: white;
+  margin: 1em;
 }
 .button{
   background-color: transparent;

@@ -20,7 +20,8 @@
     </div>
   </form>
     <div class="pad">
-    <button type="button" class="button" v-on:click="executeLogin()"> GO!
+    <button type="button" class="button" :loading ="loginActive"
+            :disabled="loginActive" v-on:click="executeLogin()"> GO!
     </button>
       <div class="error">
       <p>
@@ -43,10 +44,12 @@ export default {
       password: "",
       message: "💩",
     });
-    return { input };
+    const loginActive = false;
+    return { input, loginActive };
   },
   methods: {
     async executeLogin() {
+        this.loginActive = true;
         let transmit = {
           username: this.input.username,
           password: this.input.password,
@@ -54,10 +57,12 @@ export default {
         }
         await REST_interface.login(transmit).then(resp=>{
             sessionStorage.EAtoken = resp.accessToken;
+          this.loginActive = false;
          this.$router.push('/');
         }).catch(err=>{
           console.log(err);
           sessionStorage.removeItem('EAtoken');
+          this.loginActive = false;
           this.input.message = "That's wrong 🙄... try again 🙂"
         });
     },
