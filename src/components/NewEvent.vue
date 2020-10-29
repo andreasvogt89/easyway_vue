@@ -45,9 +45,7 @@ export default {
   },
   methods:{
     async addEvent(){
-      console.log(this.input.event.eventDate);
-      await REST_interface.postToCollection("events",{event: this.input.event,
-        created_at: new Date()}).then(resp=>{
+      await REST_interface.postToCollection("events",this.input).then(resp=>{
           console.log('Event adding status: ' + resp);
           this.$router.push('/');
       }).catch(err=>{
