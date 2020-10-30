@@ -47,7 +47,7 @@ export default {
     async addEvent(){
       await REST_interface.postToCollection("events",this.input).then(resp=>{
           console.log('Event adding status: ' + resp);
-          this.$router.push('/');
+          this.$router.replace('/');
       }).catch(err=>{
         alert("Failed to add event: " + err);
       });

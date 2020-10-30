@@ -4,11 +4,10 @@
     <button @click="this.goToEventDetails(item)" class="eventButton" v-for="item in state.events" :key="item._id">
       <span>{{item.event.name}}<br></span>
       <span>{{item.event.eventDate}}<br></span>
-      <span>{{item.event.participants.length}}👨‍👦‍👦</span>
     </button>
   </div>
   <div>
-  <button @click="this.$router.push('/events/new')" class="eventButton">
+  <button @click="this.$router.replace('/events/new')" class="eventButton">
     Event Erstellen<br>
     👩‍💻<br>
     ...
@@ -36,19 +35,20 @@ export default {
       }).catch(err=>{
         sessionStorage.removeItem('EAtoken');
         console.log("By Token 👋 :" + err.message);
-        this.$router.push('/login');
+        this.$router.replace('/login');
       });
     },
   methods:{
     parseDate(events){
       events.forEach(event=>{
         let newDate = new Date(event.event.eventDate);
+        moment.locale('de-ch');
         event.event.eventDate = "📆 " + new moment(newDate).format('L') + "\n";
       });
       return events;
     },
    goToEventDetails(item){
-     this.$router.push({name:'EventDetails', params: {_id: item._id }});
+     this.$router.replace({name:'EventDetails', params: {_id: item._id }});
     }
   }
 }
@@ -58,8 +58,7 @@ export default {
 .eventButton{
   padding: 20px;
   margin: 10px;
-  height: 6em;
-  width: 8em;
+  width: 50%;
   background-color: #1e2b36;
   border-radius: 0.2em;
   font-size: 30px;
