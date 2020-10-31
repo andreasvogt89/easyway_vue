@@ -14,7 +14,9 @@
   text-align: center;
   color: #2c3e50;
 }
-
+h1{
+  color: white;
+}
 #nav {
   padding: 30px;
 }
@@ -30,5 +32,12 @@
 body{
   background-color: #313c46;
 }
-
+.component{
+  color: white;
+  background-color: #2c3e50;
+  padding: 20px;
+  margin-left: 50px;
+  margin-right: 50px;
+  border-radius: 2em;
+}
 </style>

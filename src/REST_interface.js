@@ -75,5 +75,23 @@ class REST_interface {
                 }
             )))
     }
+    static changeItemInCollection(collectionName, itemId, item){
+        return new Promise(((resolve, reject) =>
+            axios.put(host + '/easyway/change/'+ itemId,{
+                headers: {
+                    'Collection': collectionName,
+                    'Authorization': "Bearer " +
+                        sessionStorage.getItem('EAtoken'),
+                },
+                item
+            }).then((res) => {
+                resolve(
+                    res.data
+                );
+            }).catch((err) => {
+                    reject(err);
+                }
+            )))
+    }
 }
 export default REST_interface

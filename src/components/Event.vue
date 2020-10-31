@@ -1,13 +1,24 @@
 <template>
   <div class="component">
-    <button v-on:click="this.$router.push('/')" class="button"> X </button>
+    <button v-on:click="this.$router.replace('/')" class="button"> X </button>
       <div>
     <h1>{{state.event.name}}</h1>
     <p>{{state.event.eventDate}}</p>
     <p>Anzahl Personen: {{state.event.participants.length}}</p>
+        <div>
+          <button class="personButton" v-for="item in state.event.participants" :key="item._id" >
+          <span>{{item.person.firstname}}<br></span>
+          <span>{{item.person.lastname}}</span>
+          </button>
+        </div>
       <br>
         <div>
-          <button v-on:click="this.$router.replace('/person/new')" class="button" > Add someone + </button>
+          <button v-on:click="this.$router.replace({name:'AddExistingPerson'})"
+                  class="button" >Add bestehendi lappe</button>
+        </div>
+        <div>
+          <button v-on:click="this.$router.replace({name:'NewPerson'})"
+                  class="button" >Add someone new +</button>
         </div>
       <div>
         <button v-on:click="this.deleteEvent" class="button" > Event furtputze </button>
@@ -33,12 +44,13 @@ export default {
         place: ""
       },
       error: false,
+      event_ID: sessionStorage.getItem('eventID'),
     });
     return { state };
   },
   async created() {
     await REST_interface.getCollection("events").then(resp=>{
-      let eventDb = resp.filter(item => item._id === this.$route.params._id);
+      let eventDb = resp.filter(item => item._id === this.state.event_ID);
       let newDate = new Date(eventDb[0].event.eventDate);
       eventDb[0].event.eventDate = "📆 " + new moment(newDate).format('LL') + "\n";
       this.state.event = eventDb[0].event;
@@ -47,7 +59,11 @@ export default {
       this.$router.replace('/');
     });
     await REST_interface.getCollection("persons").then(resp=>{
-      this.state.participants = resp.filter(person => person.event === this.state.event._id);
+      resp.forEach(item=>{
+        if(item.person.event.includes(this.state.event_ID)){
+          this.state.event.participants.push(item);
+        }
+      });
     }).catch(err=>{
       console.log('Event load failed: ' + err);
       this.$router.replace('/');
@@ -72,14 +88,6 @@ export default {
 </script>
 
 <style scoped>
-.component{
-  color: white;
-  background-color: #2c3e50;
-  padding: 20px;
-  margin-left: 50px;
-  margin-right: 50px;
-  border-radius: 2em;
-}
 .button{
   margin-top: 10px;
   background-color: transparent;
@@ -92,4 +100,18 @@ export default {
 .button:hover{
   background-color: #d12662;
 }
+.personButton{
+  padding: 20px;
+  margin: 10px;
+  width: 50%;
+  background-color: #1e2b36;
+  border-radius: 0.2em;
+  font-size: 30px;
+  transition-duration: 0.4s;
+  border-color: transparent;
+}
+.personButton:hover{
+  background-color: #d12662;
+}
+
 </style>

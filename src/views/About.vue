@@ -6,7 +6,7 @@
     <h3>Solothurn sucks</h3>
   </div>
 </template>
-<style>
+<style scoped>
 .about{
   color: #08a20d;
 

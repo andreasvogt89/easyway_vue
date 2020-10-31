@@ -1,4 +1,6 @@
 <template>
+  <div class="component">
+  <h1>Neues Event</h1>
 <form @keyup.enter="addEvent">
   <div  class="input">
   <label>
@@ -16,7 +18,7 @@
       </label>
     </div>
   <div class="input">
-    <button class="button" @click="this.$router.push('/')">
+    <button class="button" @click="this.$router.replace('/')">
       Abbrechen
     </button>
     <button  type="button" class="button" @click="addEvent">
@@ -24,6 +26,7 @@
     </button>
   </div>
 </form>
+  </div>
 </template>
 
 <script>

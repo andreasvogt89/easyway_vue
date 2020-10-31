@@ -35,6 +35,11 @@ const routes = [
     path: '/person/new',
     name: 'NewPerson',
     component: () => import('../components/NewPerson')
+  },
+  {
+    path: '/person/add',
+    name: 'AddExistingPerson',
+    component: () => import('../components/AddExistingPerson')
   }
 ]
 
