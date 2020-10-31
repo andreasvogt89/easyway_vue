@@ -72,7 +72,7 @@ export default {
   methods:{
     async deleteEvent() {
       if (confirm('Are you sure you want to delete this?')) {
-        await REST_interface.deleteItemInCollection("events",this.$route.params._id).then(()=>{
+        await REST_interface.deleteItemInCollection("events",this.state.event_ID).then(()=>{
           this.$router.replace('/');
         }).catch(err=>{
           alert('Event deleting failed: ' + err)

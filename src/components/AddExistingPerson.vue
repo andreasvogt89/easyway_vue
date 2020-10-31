@@ -58,9 +58,9 @@ export default {
     },
     addPersons() {
      this.state.persons.filter(person => person.selected).forEach(selectedPerson=>{
-       let updateItem =  this.state.rawPersons.find(item=> item._id = selectedPerson._id);
+       let updateItem =  this.state.rawPersons.find(item=> item._id === selectedPerson._id);
        updateItem.person.event.push(this.state.event_ID);
-           REST_interface.changeItemInCollection('persons',updateItem._id,{person: updateItem.person}).then((res)=>{
+       REST_interface.changeItemInCollection('persons',updateItem._id,{person: updateItem.person}).then((res)=>{
              console.log(res);
              this.$router.replace({name:'EventDetails'});
            }).catch(err=>{

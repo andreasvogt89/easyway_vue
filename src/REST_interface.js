@@ -77,13 +77,13 @@ class REST_interface {
     }
     static changeItemInCollection(collectionName, itemId, item){
         return new Promise(((resolve, reject) =>
-            axios.put(host + '/easyway/change/'+ itemId,{
+            axios.put(host + '/easyway/change/'+ itemId,item,{
                 headers: {
                     'Collection': collectionName,
                     'Authorization': "Bearer " +
                         sessionStorage.getItem('EAtoken'),
-                },
-                item
+                }
+
             }).then((res) => {
                 resolve(
                     res.data

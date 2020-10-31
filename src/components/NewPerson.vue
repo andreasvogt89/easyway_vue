@@ -1,7 +1,7 @@
 <template>
   <div class="component">
   <h1>Please usfülle</h1>
-  <form>
+
   <div  class="input">
     <label>
       <input type="text" name="firstname" v-model="input.person.firstname" placeholder="Vorname..">
@@ -38,7 +38,7 @@
     <button id="female" class="button" @click="selectFemale">
       🚺
     </button>
-    <button id="male"  @click="selectMale" class="button">
+    <button id="male" class="button" @click="selectMale" >
       🚹
     </button>
   </div>
@@ -69,7 +69,7 @@
         <input type="text" name="postcode" v-model="input.person.postcode" placeholder="Postleitzahl..">
       </label>
     </div>
-  </form>
+
     <div class="input">
       <button class="button" @click="this.$router.replace({name:'EventDetails', params: {_id: this.$route.params._id }})">
         Abbrechen
@@ -114,7 +114,6 @@ export default {
         woman:false,
         address:"",
       },
-      event_ID: sessionStorage.getItem('eventID'),
     });
     return { input };
   },
@@ -127,15 +126,16 @@ export default {
       this.input.person.street_number = addressData.street_number;
     },
     async addPerson(){
+      let event_ID = sessionStorage.getItem('eventID');
      if(this.input.inputDummy.woman){
        this.input.person.gender = "W"
      } else {
        this.input.person.gender = "M"
      }
-     this.input.person.event.push(this.state.event_ID);
+     this.input.person.event.push(event_ID);
         await REST_interface.postToCollection("persons",{person: this.input.person}).then(resp=>{
           console.log('person adding status: ' + resp);
-          this.$router.replace('/');
+          this.$router.replace({name:'EventDetails'});
         }).catch(err=>{
           alert("Failed to add event: " + err);
         });
