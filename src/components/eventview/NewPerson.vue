@@ -71,7 +71,7 @@
     </div>
 
     <div class="input">
-      <button class="button" @click="this.$router.replace({name:'EventDetails', params: {_id: this.$route.params._id }})">
+      <button class="button" @click="this.$router.replace({name:'EventDetails'})">
         Abbrechen
       </button>
       <button  type="button" class="button" @click="addPerson">
@@ -157,9 +157,7 @@ export default {
 </script>
 
 <style scoped>
-.input{
-  padding: 20px;
-}
+
 input[type=text] {
   height: 1em;
   width: 10em;

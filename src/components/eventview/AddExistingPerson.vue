@@ -118,4 +118,5 @@ export default {
   transition-duration: 0.4s;
   border-color: transparent;
 }
+
 </style>

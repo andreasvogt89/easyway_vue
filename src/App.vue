@@ -32,6 +32,9 @@ h1{
 body{
   background-color: #313c46;
 }
+.input{
+  padding: 20px;
+}
 .component{
   color: white;
   background-color: #2c3e50;
@@ -39,5 +42,17 @@ body{
   margin-left: 50px;
   margin-right: 50px;
   border-radius: 2em;
+}
+.button{
+  margin-top: 10px;
+  background-color: transparent;
+  padding: 10px 40px 10px 40px;
+  border-radius: 2em;
+  border-color: #1e2b36;
+  font-size: xx-large;
+}
+
+.button:hover{
+  background-color: #d12662;
 }
 </style>

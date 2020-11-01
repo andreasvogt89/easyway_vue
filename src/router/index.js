@@ -24,22 +24,32 @@ const routes = [
   {
     path: '/event',
     name: 'EventDetails',
-    component: () => import('../components/Event')
+    component: () => import('../components/eventview/Event')
   },
   {
     path: '/events/new',
     name: 'NewEvent',
-    component: () => import('../components/NewEvent')
+    component: () => import('../components/eventview/NewEvent')
   },
   {
     path: '/person/new',
     name: 'NewPerson',
-    component: () => import('../components/NewPerson')
+    component: () => import('../components/eventview/NewPerson')
   },
   {
     path: '/person/add',
     name: 'AddExistingPerson',
-    component: () => import('../components/AddExistingPerson')
+    component: () => import('../components/eventview/AddExistingPerson')
+  },
+  {
+    path: '/person/list',
+    name: 'Personlist',
+    component: () => import('../components/eventview/Personlist')
+  },
+  {
+    path: '/event/edit',
+    name: 'EditEvent',
+    component: () => import('../components/eventview/EditEvent')
   }
 ]
 

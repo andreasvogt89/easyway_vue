@@ -2,7 +2,8 @@
   <div class="component">
 <div>
   <div>
-    <button @click="this.goToEventDetails(item)" class="eventButton" v-for="item in state.events" :key="item._id">
+    <button @click="this.goToEventDetails(item)" class="eventButton"
+            v-for="item in state.events" :key="item._id">
       <span>{{item.event.name}}<br></span>
       <span>{{item.event.eventDate}}<br></span>
     </button>
@@ -51,6 +52,7 @@ export default {
     },
    goToEventDetails(item){
      sessionStorage.setItem('eventID', item._id);
+     sessionStorage.setItem('eventName', item.event.name);
      this.$router.replace({name:'EventDetails'});
     }
   }

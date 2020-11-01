@@ -1,17 +1,29 @@
 <template>
   <div class="component">
-    <button v-on:click="this.$router.replace('/')" class="button"> X </button>
+      <div class="navBarEvent">
+        <div>
+        <button v-on:click="this.$router.replace({name: 'EditEvent'})" class="buttonNAV"> ✒ </button>
+        </div>
+        <div>
+          <h1>{{state.event.name}}</h1>
+        </div>
+        <div>
+          <button v-on:click="this.$router.replace('/')" class="buttonNAV"> X </button>
+        </div>
+      </div>
       <div>
-    <h1>{{state.event.name}}</h1>
     <p>{{state.event.eventDate}}</p>
     <p>Anzahl Personen: {{state.event.participants.length}}</p>
         <div>
-          <button class="personButton" v-for="item in state.event.participants" :key="item._id" >
-          <span>{{item.person.firstname}}<br></span>
-          <span>{{item.person.lastname}}</span>
+          <button class="buttonLI" @click="this.$router.replace({name:'Personlist'})" > Lütlis
           </button>
         </div>
-      <br>
+        <div>
+        <div class="comments">
+            {{state.event.comments}}
+        </div>
+        </div>
+
         <div>
           <button v-on:click="this.$router.replace({name:'AddExistingPerson'})"
                   class="button" >Add bestehendi lappe</button>
@@ -88,7 +100,29 @@ export default {
 </script>
 
 <style scoped>
-.button{
+
+.buttonLI{
+  margin-top: 10px;
+  background-color: #1e2429;
+  height: 40%;
+  width: 40%;
+  padding: 10px 40px 10px 40px;
+  border-radius: 2px;
+  border-color: transparent;
+  font-size: xx-large;
+}
+
+.buttonLI:hover{
+  background-color: #d12662;
+}
+
+.navBarEvent{
+  display: grid;
+  grid-template-columns: auto auto auto;
+  padding: 10px;
+}
+
+.buttonNAV{
   margin-top: 10px;
   background-color: transparent;
   padding: 10px 40px 10px 40px;
@@ -97,21 +131,15 @@ export default {
   font-size: xx-large;
 }
 
-.button:hover{
-  background-color: #d12662;
-}
-.personButton{
-  padding: 20px;
-  margin: 10px;
-  width: 50%;
-  background-color: #1e2b36;
-  border-radius: 0.2em;
-  font-size: 30px;
-  transition-duration: 0.4s;
-  border-color: transparent;
-}
-.personButton:hover{
+.buttonNAV:hover{
   background-color: #d12662;
 }
 
+.comments{
+  margin: 20px;
+  padding: 10px;
+  background-color: #465255;
+  border-radius: 3px;
+  text-align: center;
+}
 </style>
