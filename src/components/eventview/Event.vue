@@ -5,12 +5,14 @@
         <button v-on:click="this.$router.replace({name: 'EditEvent'})" class="buttonNAV"> ✒ </button>
         </div>
         <div>
-          <h1>{{state.event.name}}</h1>
         </div>
         <div>
           <button v-on:click="this.$router.replace('/')" class="buttonNAV"> X </button>
         </div>
       </div>
+    <div>
+      <h1>{{state.event.name}}</h1>
+    </div>
       <div>
     <p>{{state.event.eventDate}}</p>
     <p>Anzahl Personen: {{state.event.participants.length}}</p>
@@ -138,8 +140,9 @@ export default {
 .comments{
   margin: 20px;
   padding: 10px;
-  background-color: #465255;
+  background-color: #6b6b6b;
   border-radius: 3px;
   text-align: center;
+  border-color: #d12662;
 }
 </style>

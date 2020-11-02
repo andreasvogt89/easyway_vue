@@ -1,6 +1,11 @@
 <template>
   <div class="component">
   <h1>Bestehendi lölis</h1>
+    <div>
+      <label>
+        <input type="text" v-model="state.filter" placeholder="Suche..">
+      </label>
+    </div>
   <div>
     <button class="personButton" @click="selectPerson(item)"
             :class="{ personButtonSelected: (item.selected) }" v-for="item in state.persons" :key="item._id" >
@@ -75,30 +80,11 @@ export default {
 </script>
 
 <style scoped>
-.component{
-  color: white;
-  background-color: #2c3e50;
-  padding: 20px;
-  margin-left: 50px;
-  margin-right: 50px;
-  border-radius: 2em;
-}
-.button{
-  margin: 10px;
-  background-color: transparent;
-  padding: 10px 40px 10px 40px;
-  border-radius: 2em;
-  border-color: #1e2b36;
-  font-size: xx-large;
-}
 
-.button:hover{
-  background-color: #d12662;
-}
 .personButton{
   padding: 20px;
   margin: 10px;
-  width: 50%;
+  width: 80%;
   background-color: #1e2b36;
   border-radius: 0.2em;
   font-size: 30px;
@@ -111,12 +97,23 @@ export default {
 .personButtonSelected{
   padding: 20px;
   margin: 10px;
-  width: 50%;
+  width: 80%;
   background-color: #d12662;
   border-radius: 0.2em;
   font-size: 30px;
   transition-duration: 0.4s;
   border-color: transparent;
+}
+
+input[type=text] {
+  height: 1em;
+  width: 10em;
+  margin: 5px;
+  border: 2px solid #D12662;
+  border-radius: 4px;
+  font-size: 22px;
+  background-color: #ffffff;
+  padding: 12px 20px 12px 40px;
 }
 
 </style>

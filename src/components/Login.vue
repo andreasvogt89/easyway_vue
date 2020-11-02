@@ -1,5 +1,5 @@
 <template>
-  <div class="component">
+  <div class="login">
   <div class="background">
     <div>
       <svg viewBox="0 0 671 263" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -73,7 +73,7 @@ export default {
 
 <style scoped>
 
-.component{
+.login{
   display: flex;
   justify-content: center;
 }

@@ -2,6 +2,11 @@
 <div class="component">
   <button v-on:click="this.$router.replace({name:'EventDetails'})" class="button"> X </button>
   <h1>Lütlis am {{state.event_Name}}</h1>
+  <div>
+    <label>
+      <input type="text" v-model="state.filter" placeholder="Suche..">
+    </label>
+  </div>
   <button class="personButton"
           v-for="item in state.persons" :key="item._id" >
     <span>{{item.firstname}}<br></span>
@@ -23,6 +28,7 @@ export default {
       event_ID: sessionStorage.getItem('eventID'),
       event_Name: sessionStorage.getItem('eventName'),
       error: false,
+      filter: "",
     });
     return { state };
   },
@@ -51,7 +57,7 @@ export default {
 .personButton{
   padding: 20px;
   margin: 10px;
-  width: 50%;
+  width: 80%;
   background-color: #1e2b36;
   border-radius: 0.2em;
   font-size: 30px;
@@ -60,5 +66,15 @@ export default {
 }
 .personButton:hover{
   background-color: #d12662;
+}
+input[type=text] {
+  height: 1em;
+  width: 10em;
+  margin: 5px;
+  border: 2px solid #D12662;
+  border-radius: 4px;
+  font-size: 22px;
+  background-color: #ffffff;
+  padding: 12px 20px 12px 40px;
 }
 </style>

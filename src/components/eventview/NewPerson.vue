@@ -199,18 +199,4 @@ input[type=checkbox].css-checkbox + label.css-label {
   vertical-align:middle;
   cursor:pointer;
 }
-.button{
-  background-color: transparent;
-  height: 2em;
-  width: 8em;
-  margin: 10px;
-  border-radius: 2em;
-  border-color: #1e2b36;
-  font-size: xx-large;
-}
-
-.button:hover{
-  background-color: #d12662;
-}
-
 </style>
