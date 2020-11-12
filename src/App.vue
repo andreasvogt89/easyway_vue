@@ -1,16 +1,38 @@
 <template>
-    <Nav/>
-  <router-view/>
+  <Nav/>
+  <router-view />
+  <div>
+    <p class="error" v-if="this.state.error" >Something went wrong 😐 <br>{{state.error}}</p>
+  </div>
 </template>
+
 <script>
 import Nav from "@/views/Nav";
+import { reactive } from 'vue';
 
 export default {
   name: 'App',
   components: {
-    Nav
+    Nav,
+  },
+  setup(){
+    const state = reactive({
+      backend: "",
+      login: false,
+      error: false,
+    });
+    return { state }
+  },
+  async created() {
+      if(sessionStorage.getItem('EAtoken') !== null){
+        await this.$router.replace({name: 'Events'})
+      } else {
+        await this.$router.replace({name: 'Login'})
+      }
+
   },
 }
+
 </script>
 <style>
 #app {
@@ -51,6 +73,12 @@ body{
 }
 .right{
   float: right;
+  color: white;
+}
+.error{
+  background-color: #fa6764;
+  padding: 2em;
+  border-radius: 1em;
   color: white;
 }
 </style>

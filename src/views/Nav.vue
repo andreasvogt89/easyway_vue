@@ -6,7 +6,7 @@
       <li>
         <router-link to="/about">About</router-link>
       </li>
-      <li>
+      <li class="logout">
         <a @click="logout">Logout</a>
       </li>
     </ul>
@@ -21,9 +21,9 @@ export default {
     logout(){
       sessionStorage.removeItem('EAtoken');
       console.log("By Token 👋");
-      this.$router.replace('/login');
+      this.$router.replace({name:'Login'});
     }
-  }
+  },
 }
 </script>
 
@@ -41,6 +41,10 @@ ul {
 
 li {
   float: left;
+}
+
+.logout {
+  float: right;
 }
 
 li a {

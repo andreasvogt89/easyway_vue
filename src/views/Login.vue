@@ -23,7 +23,7 @@
     <button type="button" class="button" :loading ="loginActive"
             :disabled="loginActive" v-on:click="executeLogin()"> GO!
     </button>
-      <div class="error">
+      <div class="message">
       <p>
       {{input.message}}
       </p>
@@ -58,7 +58,7 @@ export default {
         await REST_interface.login(transmit).then(resp=>{
             sessionStorage.EAtoken = resp.accessToken;
           this.loginActive = false;
-         this.$router.replace('/');
+         this.$router.replace({name: 'Events'});
         }).catch(err=>{
           console.log(err);
           sessionStorage.removeItem('EAtoken');
@@ -77,7 +77,7 @@ export default {
   display: flex;
   justify-content: center;
 }
-.error{
+.message{
   color: red;
   font-size: 30px;
 }
@@ -108,7 +108,7 @@ export default {
   border-radius: 0.5em;
 }
 .background:before {
-  background-image: url(../assets/background.jpg);
+  background-image: url(src/assets/background.jpg);
   background-repeat: no-repeat;
   background-size: cover;
   content: "";

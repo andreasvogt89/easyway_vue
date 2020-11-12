@@ -38,7 +38,7 @@ export default {
       }).catch(err=>{
         sessionStorage.removeItem('EAtoken');
         console.log("By Token 👋 :" + err.message);
-        this.$router.replace('/login');
+        this.$router.replace({name:'Login'});
       });
     },
   methods:{
