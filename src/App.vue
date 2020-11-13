@@ -48,7 +48,7 @@ h1{
 }
 
 body{
-  background-color: #313c46;
+  background-color: rgb(24, 26, 31);
 }
 .input{
   padding: 20px;

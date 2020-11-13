@@ -7,13 +7,15 @@
         <router-link to="/about">About</router-link>
       </li>
       <li class="logout">
-        <a @click="logout">Logout</a>
+        <a @click="logout">{{this.state.login}}</a>
       </li>
     </ul>
 </template>
 
 <script>
-
+// some JS file
+import store from '../store/index';
+import { reactive } from 'vue';
 
 export default {
   name: "Nav",
@@ -23,6 +25,12 @@ export default {
       console.log("By Token 👋");
       this.$router.replace({name:'Login'});
     }
+  },
+  setup(){
+    const state = reactive({
+     login: store.getters.loginState,
+    });
+    return { state }
   },
 }
 </script>

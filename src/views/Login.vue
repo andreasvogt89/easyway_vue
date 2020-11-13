@@ -56,8 +56,9 @@ export default {
           role:"Admin"
         }
         await REST_interface.login(transmit).then(resp=>{
-            sessionStorage.EAtoken = resp.accessToken;
+          sessionStorage.EAtoken = resp.accessToken;
           this.loginActive = false;
+
          this.$router.replace({name: 'Events'});
         }).catch(err=>{
           console.log(err);
@@ -108,7 +109,7 @@ export default {
   border-radius: 0.5em;
 }
 .background:before {
-  background-image: url(src/assets/background.jpg);
+  background-image: url('../assets/background.jpg');
   background-repeat: no-repeat;
   background-size: cover;
   content: "";

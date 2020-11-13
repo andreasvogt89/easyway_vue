@@ -17,13 +17,14 @@ export default createStore({
     user (state, data){
       state.login.username = data.user[0].username;
       state.login.role = data.user[0].role;
+      state.login.isLoggedIn = true;
     },
     error (state, error){
       state.error = error
     },
     backend(state, data){
       state.backend = data
-    }
+    },
   },
   actions: {
     async login({commit}, user) {
@@ -31,6 +32,7 @@ export default createStore({
           .then(res => {
             sessionStorage.setItem('EAtoken', res.data.accessToken)
             commit('user', res.data)
+
           }).catch(err => {
             commit('error', err)
           });
@@ -47,7 +49,11 @@ export default createStore({
             commit('error', err)
           });
     },
+
   },
-  modules: {
-  },
-})
+    getters: {
+        loginState(state){
+            return state.login.isLoggedIn;
+        }
+    },
+});
