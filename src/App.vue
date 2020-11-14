@@ -4,6 +4,12 @@
   <div>
     <p class="error" v-if="this.state.error" >Something went wrong 😐 <br>{{state.error}}</p>
   </div>
+  <div>
+    <p class="userComment" v-if="this.$store.getters.loginState" >
+      Logged in as: {{$store.getters.getUsername}},
+      can do {{$store.getters.getUserRole}} things 😎
+    </p>
+  </div>
 </template>
 
 <script>
@@ -80,5 +86,10 @@ body{
   padding: 2em;
   border-radius: 1em;
   color: white;
+}
+.userComment{
+  color: white;
+  padding: 1em;
+  float: left;
 }
 </style>

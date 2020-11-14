@@ -6,31 +6,24 @@
       <li>
         <router-link to="/about">About</router-link>
       </li>
-      <li class="logout">
-        <a @click="logout">{{this.state.login}}</a>
+      <li v-if="this.$store.getters.loginState" class="logout">
+        <a @click="logout">LOGOUT</a>
       </li>
     </ul>
 </template>
 
 <script>
-// some JS file
-import store from '../store/index';
-import { reactive } from 'vue';
+
 
 export default {
   name: "Nav",
   methods:{
     logout(){
       sessionStorage.removeItem('EAtoken');
+      this.$store.dispatch('logout');
       console.log("By Token 👋");
       this.$router.replace({name:'Login'});
-    }
-  },
-  setup(){
-    const state = reactive({
-     login: store.getters.loginState,
-    });
-    return { state }
+    },
   },
 }
 </script>

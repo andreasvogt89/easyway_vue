@@ -35,7 +35,8 @@
 
 <script>
 import { reactive } from 'vue';
-import REST_interface from "@/REST_interface";
+import store from "@/store";
+
 
 export default {
   setup() {
@@ -49,23 +50,19 @@ export default {
   },
   methods: {
     async executeLogin() {
-        this.loginActive = true;
-        let transmit = {
+       this.loginActive = true;
+       await this.$store.dispatch('login', {
           username: this.input.username,
           password: this.input.password,
           role:"Admin"
-        }
-        await REST_interface.login(transmit).then(resp=>{
-          sessionStorage.EAtoken = resp.accessToken;
-          this.loginActive = false;
-
-         this.$router.replace({name: 'Events'});
-        }).catch(err=>{
-          console.log(err);
-          sessionStorage.removeItem('EAtoken');
-          this.loginActive = false;
-          this.input.message = "That's wrong 🙄... try again 🙂"
         });
+        if(store.getters.loginState){
+          await this.$router.replace({name: 'Events'});
+        } else {
+          sessionStorage.removeItem('EAtoken');
+          this.input.message = "That's wrong 🙄... try again 🙂"
+        }
+         this.loginActive = false;
     },
   },
 

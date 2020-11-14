@@ -8,16 +8,22 @@ export default createStore({
       login:{
         isLoggedIn: false,
         username: "",
+        role:"",
       },
       data: [],
       error: "",
       backend: "",
   },
   mutations: {
-    user (state, data){
-      state.login.username = data.user[0].username;
-      state.login.role = data.user[0].role;
+    setUser (state, data){
+      state.login.username = data.username;
+      state.login.role = data.role;
       state.login.isLoggedIn = true;
+    },
+    removeUser(state){
+        state.login.username = ""
+        state.login.role = ""
+        state.login.isLoggedIn = false;
     },
     error (state, error){
       state.error = error
@@ -28,17 +34,19 @@ export default createStore({
   },
   actions: {
     async login({commit}, user) {
-      REST_interface.login(user)
+     await REST_interface.login(user)
           .then(res => {
-            sessionStorage.setItem('EAtoken', res.data.accessToken)
-            commit('user', res.data)
-
+            sessionStorage.setItem('EAtoken', res.accessToken)
+            commit('setUser', res.user[0]);
           }).catch(err => {
-            commit('error', err)
+            commit('error', err);
           });
     },
+    logout({commit}) {
+        commit('removeUser');
+    },
     async backendState({commit}) {
-      REST_interface.isBackendRunning()
+     await REST_interface.isBackendRunning()
           .then(res => {
             if(res.message instanceof String){
               commit('backend', true)
@@ -52,8 +60,14 @@ export default createStore({
 
   },
     getters: {
-        loginState(state){
+        loginState: state => {
             return state.login.isLoggedIn;
+        },
+        getUsername: state => {
+            return state.login.username
+        },
+        getUserRole: state => {
+            return state.login.role
         }
-    },
+    }
 });
