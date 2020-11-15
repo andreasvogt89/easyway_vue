@@ -1,6 +1,7 @@
 <template>
   <div class="component">
 <div>
+  <h1>Eventliste</h1>
   <div>
     <button @click="this.goToEventDetails(item)" class="eventButton"
             v-for="item in state.events" :key="item._id">

@@ -4,7 +4,7 @@
       <router-link to="/">Events</router-link>
       </li>
       <li>
-        <router-link to="/about">About</router-link>
+        <router-link  to="/about">About</router-link>
       </li>
       <li v-if="this.$store.getters.loginState" class="logout">
         <a @click="logout">LOGOUT</a>
@@ -54,8 +54,15 @@ li a {
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
+  background-color: #6b6b6b;
+  border-color: #964e4e;
+
 }
 li a:hover {
-  background-color: #111;
+  background-color: #111111;
 }
+a.router-link-exact-active {
+  background-color: #d12662;
+}
+
 </style>

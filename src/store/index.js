@@ -61,6 +61,7 @@ export default createStore({
   },
     getters: {
         loginState: state => {
+            console.log(state.login.isLoggedIn)
             return state.login.isLoggedIn;
         },
         getUsername: state => {
@@ -69,5 +70,5 @@ export default createStore({
         getUserRole: state => {
             return state.login.role
         }
-    }
+    },
 });
