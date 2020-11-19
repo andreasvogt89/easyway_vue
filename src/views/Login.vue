@@ -23,7 +23,7 @@
     <button type="button" class="button" :loading ="loginActive"
             :disabled="loginActive" v-on:click="executeLogin()"> GO!
     </button>
-      <div class="error">
+      <div class="message">
       <p>
       {{input.message}}
       </p>
@@ -35,7 +35,8 @@
 
 <script>
 import { reactive } from 'vue';
-import REST_interface from "@/REST_interface";
+import store from "@/store";
+
 
 export default {
   setup() {
@@ -49,22 +50,19 @@ export default {
   },
   methods: {
     async executeLogin() {
-        this.loginActive = true;
-        let transmit = {
+       this.loginActive = true;
+       await this.$store.dispatch('login', {
           username: this.input.username,
           password: this.input.password,
           role:"Admin"
-        }
-        await REST_interface.login(transmit).then(resp=>{
-            sessionStorage.EAtoken = resp.accessToken;
-          this.loginActive = false;
-         this.$router.replace('/');
-        }).catch(err=>{
-          console.log(err);
-          sessionStorage.removeItem('EAtoken');
-          this.loginActive = false;
-          this.input.message = "That's wrong 🙄... try again 🙂"
         });
+        if(store.getters.loginState){
+          await this.$router.replace({name: 'Events'});
+        } else {
+          sessionStorage.removeItem('EAtoken');
+          this.input.message = "That's wrong 🙄... try again 🙂"
+        }
+         this.loginActive = false;
     },
   },
 
@@ -77,7 +75,7 @@ export default {
   display: flex;
   justify-content: center;
 }
-.error{
+.message{
   color: red;
   font-size: 30px;
 }
@@ -108,7 +106,7 @@ export default {
   border-radius: 0.5em;
 }
 .background:before {
-  background-image: url(../assets/background.jpg);
+  background-image: url('../assets/background.jpg');
   background-repeat: no-repeat;
   background-size: cover;
   content: "";

@@ -1,15 +1,15 @@
 <template>
   <div class="component">
-      <div class="navBarEvent">
-        <div>
-        <button v-on:click="this.$router.replace({name: 'EditEvent'})" class="buttonNAV"> ✒ </button>
-        </div>
-        <div>
-        </div>
-        <div>
-          <button v-on:click="this.$router.replace('/')" class="buttonNAV"> X </button>
-        </div>
-      </div>
+    <div class="list">
+      <ul>
+        <li>
+        <a v-on:click="this.$router.replace({name: 'EditEvent'})" class="buttonNAV"> Edit </a>
+        </li>
+        <li>
+          <a v-on:click="this.$router.replace('/')" class="buttonNAV"> X </a>
+        </li>
+      </ul>
+    </div>
     <div>
       <h1>{{state.event.name}}</h1>
     </div>
@@ -145,4 +145,31 @@ export default {
   text-align: center;
   border-color: #d12662;
 }
+
+.list {
+  list-style-type: none;
+  margin: 10px;
+  padding: 10px;
+  overflow: hidden;
+  background-color: transparent;
+  border-color: #333333;
+  border-radius: 2px;
+  top: 0;
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+li a:hover {
+  background-color: #111;
+}
+
 </style>

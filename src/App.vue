@@ -1,16 +1,44 @@
 <template>
-    <Nav/>
-  <router-view/>
+  <Nav/>
+  <router-view />
+  <div>
+    <p class="error" v-if="this.state.error" >Something went wrong 😐 <br>{{state.error}}</p>
+  </div>
+  <div>
+    <p class="userComment" v-if="this.$store.getters.loginState" >
+      Logged in as: {{$store.getters.getUsername}},
+      can do {{$store.getters.getUserRole}} things 😎
+    </p>
+  </div>
 </template>
+
 <script>
 import Nav from "@/views/Nav";
+import { reactive } from 'vue';
 
 export default {
   name: 'App',
   components: {
-    Nav
+    Nav,
+  },
+  setup(){
+    const state = reactive({
+      backend: "",
+      login: false,
+      error: false,
+    });
+    return { state }
+  },
+  async created() {
+      if(sessionStorage.getItem('EAtoken') !== null){
+        await this.$router.replace({name: 'Events'})
+      } else {
+        await this.$router.replace({name: 'Login'})
+      }
+
   },
 }
+
 </script>
 <style>
 #app {
@@ -26,7 +54,7 @@ h1{
 }
 
 body{
-  background-color: #313c46;
+  background-color: rgb(24, 26, 31);
 }
 .input{
   padding: 20px;
@@ -52,5 +80,16 @@ body{
 .right{
   float: right;
   color: white;
+}
+.error{
+  background-color: #fa6764;
+  padding: 2em;
+  border-radius: 1em;
+  color: white;
+}
+.userComment{
+  color: white;
+  padding: 1em;
+  float: left;
 }
 </style>

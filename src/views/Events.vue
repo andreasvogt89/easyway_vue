@@ -1,6 +1,7 @@
 <template>
   <div class="component">
 <div>
+  <h1>Eventliste</h1>
   <div>
     <button @click="this.goToEventDetails(item)" class="eventButton"
             v-for="item in state.events" :key="item._id">
@@ -38,7 +39,7 @@ export default {
       }).catch(err=>{
         sessionStorage.removeItem('EAtoken');
         console.log("By Token 👋 :" + err.message);
-        this.$router.replace('/login');
+        this.$router.replace({name:'Login'});
       });
     },
   methods:{
