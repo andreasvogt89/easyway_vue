@@ -1,5 +1,5 @@
 import axios from 'axios';
-const host = 'https://dinifarb.duckdns.org:4556';
+const host = 'https://dinifarb.duckdns.org:4443';
 
 class REST_interface {
     static isBackendRunning(){
