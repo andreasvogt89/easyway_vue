@@ -1,31 +1,35 @@
 <template>
-  <div class="component">
-    <div class="list">
-      <ul>
-        <li>
-        <a v-on:click="this.$router.replace({name: 'EditEvent'})" class="buttonNAV"> Edit </a>
+<div class="component">
+  <div class="navbar">
+ <nav>
+    <div class="nav-wrapper blue-grey darken-3">
+      <a class="brand-logo center">{{state.event.name}}</a>
+      <ul id="nav-mobile" class="right">
+        <li><a v-on:click="this.$router.replace({name: 'EditEvent'})">
+          <i class="material-icons">build</i></a>
         </li>
-        <li>
-          <a v-on:click="this.$router.replace('/')" class="buttonNAV"> X </a>
+        <li><a v-on:click="this.downloadExcel">
+        <i class="material-icons">assessment</i></a>
+        </li>
+        <li><a v-on:click="this.$router.replace('/')">
+        <i class="material-icons">clear</i></a>
         </li>
       </ul>
     </div>
+  </nav>
+  </div>
     <div>
-      <h1>{{state.event.name}}</h1>
-    </div>
-      <div>
-    <p>{{state.event.eventDate}}</p>
-    <p>Anzahl Personen: {{state.event.participants.length}}</p>
+        <p>{{state.event.eventDate}}</p>
+        <p>Anzahl Personen: {{state.event.participants.length}}</p>
         <div>
           <button class="buttonLI" @click="this.$router.replace({name:'Personlist'})" > Lütlis
           </button>
         </div>
         <div>
-        <div class="comments">
+        <div v-if="this.state.comments" class="comments">
             {{state.event.comments}}
         </div>
         </div>
-
         <div>
           <button v-on:click="this.$router.replace({name:'AddExistingPerson'})"
                   class="button" >Add bestehendi lappe</button>
@@ -34,10 +38,10 @@
           <button v-on:click="this.$router.replace({name:'NewPerson'})"
                   class="button" >Add someone new +</button>
         </div>
-      <div>
-        <button v-on:click="this.deleteEvent" class="button" > Event furtputze </button>
+        <div>
+          <button v-on:click="this.deleteEvent" class="button" > Event furtputze </button>
+        </div>
       </div>
-    </div>
   </div>
 </template>
 
@@ -59,6 +63,7 @@ export default {
       },
       error: false,
       event_ID: sessionStorage.getItem('eventID'),
+      loadingActive: false,
     });
     return { state };
   },
@@ -97,6 +102,12 @@ export default {
         alert("You're weak... weichbächer")
       }
     },
+    async downloadExcel(){
+      console.log(this.state.event_ID);
+      await REST_interface.createExcel(this.state.event_ID).then(()=>{
+        console.log("done!");
+      })
+    }
   }
 }
 </script>
@@ -118,58 +129,17 @@ export default {
   background-color: #d12662;
 }
 
-.navBarEvent{
-  display: grid;
-  grid-template-columns: auto auto auto;
-  padding: 10px;
-}
-
-.buttonNAV{
-  margin-top: 10px;
-  background-color: transparent;
-  padding: 10px 40px 10px 40px;
-  border-radius: 2em;
-  border-color: #1e2b36;
-  font-size: xx-large;
-}
-
-.buttonNAV:hover{
-  background-color: #d12662;
-}
-
 .comments{
   margin: 20px;
   padding: 10px;
   background-color: #6b6b6b;
   border-radius: 3px;
   text-align: center;
-  border-color: #d12662;
+  word-break: break-all;
 }
-
-.list {
-  list-style-type: none;
+.navbar{
   margin: 10px;
   padding: 10px;
-  overflow: hidden;
-  background-color: transparent;
-  border-color: #333333;
   border-radius: 2px;
-  top: 0;
 }
-
-li {
-  float: left;
-}
-
-li a {
-  display: block;
-  color: white;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-}
-li a:hover {
-  background-color: #111;
-}
-
 </style>

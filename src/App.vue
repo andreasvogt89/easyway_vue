@@ -61,9 +61,11 @@ body{
 }
 .component{
   color: white;
-  background-color: #2c3e50;
-  border-radius: 2em;
+  background-color: #323536;
+  border-radius: 1em;
+  margin: 2em;
   justify-content: center;
+  display: block;
 }
 .button{
   margin: 10px;
