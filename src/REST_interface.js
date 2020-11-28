@@ -91,7 +91,14 @@ class REST_interface {
         // Get Excel sheet
     static createExcel(itemId) {
         return new Promise(((resolve, reject) =>
-            axios.get(host + '/export/excel/' + itemId, { responseType: 'arraybuffer' }).then((res) => {
+            axios.get(host + '/export/excel/' + itemId, {
+                responseType: 'arraybuffer',
+                headers: {
+                    'Authorization': "Bearer " +
+                        sessionStorage.getItem('EAtoken'),
+                },
+
+            }).then((res) => {
                 resolve(
                     this.forceFileDownload(res)
                 );
