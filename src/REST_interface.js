@@ -91,7 +91,14 @@ class REST_interface {
         // Get Excel sheet of all graphics
     static createExcel(itemId) {
         return new Promise(((resolve, reject) =>
-            axios.get(host + '/export/excel/' + itemId, { responseType: 'arraybuffer' }).then((res) => {
+            axios.get(host + '/export/excel/' + itemId, {
+                responseType: 'arraybuffer',
+                headers: {
+                    'Authorization': "Bearer " +
+                        sessionStorage.getItem('EAtoken'),
+                },
+
+            }).then((res) => {
                 resolve(
                     this.forceFileDownload(res)
                 );
@@ -104,7 +111,7 @@ class REST_interface {
         const url = window.URL.createObjectURL(new Blob([response.data]));
         const link = document.createElement('a')
         link.href = url
-        link.setAttribute('download', 'graphics.xlsx') //or any other extension
+        link.setAttribute('download', 'event.xlsx') //or any other extension
         document.body.appendChild(link)
         link.click()
     }
