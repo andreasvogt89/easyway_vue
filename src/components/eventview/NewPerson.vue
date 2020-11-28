@@ -1,7 +1,7 @@
 <template>
   <div class="component">
+    <h1>Please usfülle</h1>
     <div v-if="!input.loadingActiv">
-      <h1>Please usfülle</h1>
           <div class="dummyPerson">
             <h4>Dummy person</h4>
             <div class="switch">
@@ -103,7 +103,7 @@
         </button>
         </div>
     </div>
-    <div v-if="input.loadingActive">
+    <div class="input" v-if="input.loadingActiv">
     <div class="progress">
       <div class="indeterminate"></div>
     </div>
@@ -160,7 +160,7 @@ export default {
       this.input.person.street_number = addressData.street_number;
     },
     async addPerson(){
-      this.state.loadingActiv = true;
+      this.input.loadingActiv = true;
       let event_ID = sessionStorage.getItem('eventID');
      if(this.input.inputDummy.woman){
        this.input.person.gender = "W"
@@ -185,7 +185,7 @@ export default {
      } else{
        await this.sendAddPerson();
      }
-     this.state.loadingActiv = false;  
+     this.input.loadingActiv = false;  
      this.$router.replace({name:'EventDetails'});
     },
     async sendAddPerson(){
