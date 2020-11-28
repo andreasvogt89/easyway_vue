@@ -42,7 +42,7 @@ export default {
         eventDate: "",
         place:"",
         participants: [],
-      },
+      }
     });
     return { input };
   },

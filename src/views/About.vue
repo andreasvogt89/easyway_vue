@@ -16,7 +16,7 @@ h1{
 }
 h2{
   font-family: Gadugi;
-  color: #121212;
+  color: rgb(255, 255, 255);
 }
 
 

@@ -5,6 +5,9 @@
     <div class="nav-wrapper blue-grey darken-3">
       <a class="brand-logo center">{{state.event.name}}</a>
       <ul id="nav-mobile" class="right">
+        <li><a v-on:click="this.deleteEvent">
+        <i class="material-icons">delete</i></a>
+        </li>
         <li><a v-on:click="this.$router.replace({name: 'EditEvent'})">
           <i class="material-icons">build</i></a>
         </li>
@@ -37,9 +40,6 @@
         <div>
           <button v-on:click="this.$router.replace({name:'NewPerson'})"
                   class="button" >Add someone new +</button>
-        </div>
-        <div>
-          <button v-on:click="this.deleteEvent" class="button" > Event furtputze </button>
         </div>
       </div>
   </div>
