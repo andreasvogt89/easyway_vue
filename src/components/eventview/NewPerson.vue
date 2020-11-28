@@ -179,7 +179,6 @@ export default {
         this.input.person.street_number = "0000";
         this.input.person.postcode = '0000';
         this.input.person.city = "#DUMMY";
-
         for(var i = 0; i < this.input.dummyPerson.amount; i++){
           await this.sendAddPerson();
         }
