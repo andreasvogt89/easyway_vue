@@ -51,7 +51,7 @@
           </div>
             <div class="input">
               <label>
-                <input type="text" name="age" v-model="input.person.age" placeholder="Alter...">
+                <input type="date" placeholder="Geburi..">
               </label>
               <label>
                 <input type="text" name="comments" v-model="input.person.comments" placeholder="Kommentare...">
@@ -134,6 +134,7 @@ export default {
         postcode:"",
         gender:"",
         age: "",
+        birthdate:"",
         class: "",
         comments:"",
         event:[],
