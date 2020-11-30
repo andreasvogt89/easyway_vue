@@ -36,7 +36,7 @@ export default {
     await REST_interface.getCollection("persons").then(resp=>{
       this.state.rawPersons = resp;
       resp.forEach(item=> {
-        if (item.person.event.includes(this.state.event_ID)) {
+        if (item.person.event.includes(this.state.event_ID) && (item.person.firstname !== '#DUMMY')) {
           this.state.persons.push({
             firstname: item.person.firstname,
             lastname: item.person.lastname,

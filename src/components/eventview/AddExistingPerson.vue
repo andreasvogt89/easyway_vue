@@ -36,6 +36,7 @@ export default {
       rawPersons: [],
       event_ID: sessionStorage.getItem('eventID'),
       error: false,
+      filter: "",
     });
     return { state };
   },
@@ -43,7 +44,7 @@ export default {
     await REST_interface.getCollection("persons").then(resp=>{
       this.state.rawPersons = resp;
       resp.forEach(item=> {
-        if (!item.person.event.includes(this.state.event_ID)) {
+        if (!item.person.event.includes(this.state.event_ID) && (item.person.firstname !== '#DUMMY')) {
           this.state.persons.push({
             firstname: item.person.firstname,
             lastname: item.person.lastname,
@@ -51,12 +52,14 @@ export default {
             selected: false,
           });
         }
+        setInterval(this.searchSync(), 250);
       });
     }).catch(err=>{
       console.log('Event load failed: ' + err);
       this.$router.replace('/');
     });
   },
+  //TODO search Sync
   methods:{
     selectPerson(item){
       item.selected = !item.selected;
@@ -72,10 +75,13 @@ export default {
              alert("Something went wrong: " + err);
            })
      });
-
-    }
-  }
-
+    },
+    searchSync(){
+       let search = this.state.filter + "*";
+       this.state.person = this.state.persons.filter(person => 
+       person.firstname == search || person.lastname == search);
+    },
+  },
 }
 </script>
 

@@ -23,7 +23,7 @@
           </p>
             </div>
           </div>
-          <div class="input" v-if="!input.dummyPerson.enabled">
+          <div v-if="!input.dummyPerson.enabled">
             <div class="input">
               <label>
                 <input type="text" name="firstname" v-model="input.person.firstname" placeholder="Vorname..">
@@ -48,16 +48,15 @@
                 <input type="text" name="class" v-model="input.person.class" placeholder="Klasse...">
               </label>
             </div>
-          </div>
             <div class="input">
               <label>
-                <input type="date" placeholder="Geburi..">
+                <input type="date" placeholder="Geburi.." v-model="input.person.birthdate">
               </label>
               <label>
                 <input type="text" name="comments" v-model="input.person.comments" placeholder="Kommentare...">
               </label>
             </div>
-          <div class="input" v-if="!input.dummyPerson.enabled">
+          <div class="input">
             <div class="input">
               <vue-google-autocomplete
                   name="search"
@@ -86,7 +85,16 @@
               </label>
             </div>
           </div>
-        <div class="input">
+          </div>
+          <div class="input" v-if="input.dummyPerson.enabled">
+              <label>
+                <input type="text" placeholder="Alter.." v-model="input.person.age">
+              </label>
+              <label>
+                <input type="text" name="comments" v-model="input.person.comments" placeholder="Kommentare...">
+              </label>
+          </div>
+          <div class="input">
           <button id="female" class="button" @click="selectFemale">
             🚺
           </button>
@@ -183,7 +191,8 @@ export default {
         for(var i = 0; i < this.input.dummyPerson.amount; i++){
           await this.sendAddPerson();
         }
-     } else{
+     } else {
+       this.input.person.age = this.calculateAge(this.input.person.birthdate);
        await this.sendAddPerson();
      }
      this.input.loadingActiv = false;  
@@ -207,6 +216,11 @@ export default {
       this.input.inputDummy.woman = true;
       document.getElementById("female").style.backgroundColor = "#D12662";
       document.getElementById("male").style.backgroundColor = "transparent";
+    },
+    calculateAge(birthday) { 
+    var ageDifMs = Date.now() - birthday.getTime();
+    var ageDate = new Date(ageDifMs); 
+    return Math.abs(ageDate.getUTCFullYear() - 1970);
     }
   }
 }
